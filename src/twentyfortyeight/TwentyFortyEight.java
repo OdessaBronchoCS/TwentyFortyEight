@@ -4,12 +4,7 @@
  */
 package twentyfortyeight;
 
-import info.gridworld.actor.Actor;
-import info.gridworld.actor.ActorWorld;
 import info.gridworld.grid.BoundedGrid;
-import info.gridworld.grid.Location;
-import info.gridworld.world.World;
-import java.util.ArrayList;
 
 /**
  *
