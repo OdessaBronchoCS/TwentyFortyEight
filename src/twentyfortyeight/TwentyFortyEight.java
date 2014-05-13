@@ -23,6 +23,10 @@ public class TwentyFortyEight {
         BoundedGrid<PowerOfTwo> grid = new BoundedGrid<>(4, 4);
         TwentyFortyEightWorld world = new TwentyFortyEightWorld(grid);
         world.show();
-        world.run();
+        do {            
+            world.run();
+//            String msg = world.getMessage();
+//            world.pause(msg + "\nGame over!");
+        } while (true);
     }
 }
