@@ -23,6 +23,10 @@ public class TwentyFortyEightWorld extends World<PowerOfTwo> {
     ArrayList<PowerOfTwo> tileSet = new ArrayList<>();
     ArrayList<Location> locSet = new ArrayList<>();
 
+    public TwentyFortyEightWorld(BoundedGrid<PowerOfTwo> grid) {
+        super(grid);
+    }
+    
     private Location getRandomEmptyLocation(Grid<PowerOfTwo> grid) {
         ArrayList<Location> occ = grid.getOccupiedLocations();
         int row;
@@ -34,10 +38,6 @@ public class TwentyFortyEightWorld extends World<PowerOfTwo> {
             target = new Location(row, col);
         } while (occ.contains(target));
         return target;
-    }
-
-    public TwentyFortyEightWorld(BoundedGrid<PowerOfTwo> grid) {
-        super(grid);
     }
 
     @Override
