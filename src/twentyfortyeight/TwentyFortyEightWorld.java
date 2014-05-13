@@ -22,6 +22,7 @@ public class TwentyFortyEightWorld extends World<PowerOfTwo> {
     private Semaphore s = new Semaphore(0);
     ArrayList<PowerOfTwo> tileSet = new ArrayList<>();
     ArrayList<Location> locSet = new ArrayList<>();
+    int score = 0;
 
     public TwentyFortyEightWorld(BoundedGrid<PowerOfTwo> grid) {
         super(grid);
@@ -104,10 +105,15 @@ public class TwentyFortyEightWorld extends World<PowerOfTwo> {
             Location loc = this.getRandomEmptyLocation(getGrid());
             int pwr = (int) (Math.random() + 1.3);
             this.add(loc, new PowerOfTwo(pwr));
-            pause();
-        } while (true);
+            pause("Score: " + String.valueOf(score));
+        } while (!isBlocked());
     }
 
+    public void pause(String msg){
+        setMessage(msg);
+        pause();
+    }
+    
     private void pause() {
         try {
             s.acquire();
@@ -121,6 +127,7 @@ public class TwentyFortyEightWorld extends World<PowerOfTwo> {
             if (r + 1 < tileSet.size()
                     && tileSet.get(r).getPower() == tileSet.get(r + 1).getPower()) {
                 tileSet.get(r).increase();
+                score += (int)(Math.pow(2, tileSet.get(r).getPower()));
                 tileSet.remove(r + 1);
             }
         }
@@ -147,5 +154,23 @@ public class TwentyFortyEightWorld extends World<PowerOfTwo> {
         replaceTiles();
         locSet.clear();
         tileSet.clear();
+    }
+
+    private boolean isBlocked() {
+        ArrayList<PowerOfTwo> vs = new ArrayList<>();
+        for (int r = 0; r < getGrid().getNumRows(); r++) {
+            for (int c = 0; c < getGrid().getNumCols(); c++) {
+                Location here = new Location(r, c);
+                PowerOfTwo p1 = getGrid().get(here);
+                getGrid().getNeighbors(here);
+                for (PowerOfTwo p2 : vs) {
+                    if (p2.getPower() == p1.getPower()) {
+                        return false;
+                    }
+                }
+            }
+        }
+ 
+       return true;
     }
 }
